@@ -17,7 +17,7 @@ jobs:
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
         run: |
-          git config --global user.name "zhongba"
-          git config --global user.email "zhong.ba@foxmail.com"
+          git config --global user.name '追梦 忆影' 
+          git config --global user.email '2055514503@qq.com'
           git remote add gitee git@gitee.com:zhongba/ai-demo.git
           git push gitee main --force  # 替换为你想要同步的分支
