@@ -19,5 +19,5 @@ jobs:
         run: |
           git config --global user.name "Your GitHub Username"
           git config --global user.email "zhong.ba@foxmail.com"
-          git remote add gitee https://$GITEE_TOKEN@gitee.com/zhongba/ai-demo.git
+          git remote add gitee git@gitee.com:zhongba/ai-demo.git
           git push gitee main --force  # 替换为你想要同步的分支
