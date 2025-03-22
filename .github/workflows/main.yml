@@ -1,9 +1,5 @@
-# name: Sync Github Repos To Gitee
-# on: [ push, delete, create ]
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
+
+# steps:
 #     - name: Sync Github Repos To Gitee  # 名字随便起
 #       uses: Yikun/hub-mirror-action@master  # 使用Yikun/hub-mirror-action
 #       with:
@@ -17,22 +13,18 @@
 #         force_update: true  # 启用后，强制同步，即强制覆盖目的端仓库
 #         static_list: "ai-demo"  # 静态同步列表，在此填写需要同步的仓库名称，可填写多个
 #         timeout: '600s'  # git超时设置，超时后会自动重试git操作
-name: Mirror to Bitbucket Repo
-
-on: [ push, delete, create ]
-
-# Ensures that only one mirror task will run at a time.
-concurrency:
-  group: git-mirror
-
-jobs:
-  git-mirror:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: wearerequired/git-mirror-action@v1
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.GITEE_TOKEN }}
-        with:
-          source-repo: "git@github.com:zbfox/ai-demo.git"
-          destination-repo: "git@gitee.com:zhongba/ai-demo.git"
+steps:
+- name: Mirror the Github organization repos to Gitee
+  uses: Yikun/hub-mirror-action@master
+  with:
+    src: github/zbfox
+    dst: gitee/zhongba  # 目的端账户名(gitee)
+    dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+    dst_token: ${{ secrets.GITEE_TOKEN }}
+    # 支持Github/Gitee的用户、组织以及Gitlab的组
+    account_type: user
+    clone_style: "https"  # 使用https方式进行clone，也可以使用ssh
+    debug: true  # 启用后会显示所有执行命令
+    force_update: true  # 启用后，强制同步，即强制覆盖目的端仓库
+    static_list: "ai-demo"  # 静态同步列表，在此填写需要同步的仓库名称，可填写多个
+    timeout: '600s'  # git超时设置，超时后会自动重试git操作
